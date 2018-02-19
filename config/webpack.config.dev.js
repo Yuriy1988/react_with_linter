@@ -13,17 +13,6 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const getCustomConfig = require('./custom-react-scripts/config');
 
-// Prepare custom GraphQl config
-let stylelintConfigFilePath;
-const stylelintConfigStyledFilePath = path.resolve(
-  __dirname,
-  './stylelintConfigStyled.js'
-);
-
-
-path.resolve(__dirname, './.stylelintrc');
-// require.resolve(path.resolve('./.eslintrc.js'));
-
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -203,10 +192,11 @@ module.exports = {
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    // new StyleLintPlugin({
-    //   emitErrors: false,
-    //   configFile: stylelintConfigFilePath,
-    // }),
+    new StyleLintPlugin({
+      emitErrors: false,
+      configFile: path.resolve(__dirname, './.stylelintrc'),
+      sytax: 'scss',
+    }),
     // new StyleLintPlugin({
     //   emitErrors: false,
     //   files: ['./src/**/*.js'],

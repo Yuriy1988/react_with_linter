@@ -3,62 +3,19 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const paths = require('./paths');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const getClientEnvironment = require('./env');
+const paths = require('./paths');
 const getCustomConfig = require('./custom-react-scripts/config');
-const fs = require('fs');
-const graphqlEnv = process.env['REACT_APP_GRAPHQL'] || '';
-const isGraphqlActivated = graphqlEnv.indexOf('true') !== -1;
 
-// Prepare custom GraphQl config
-let schemaJsonFilepath;
-let customESlintFile = {};
-let stylelintConfigFilePath;
-const stylelintConfigStyledFilePath = path.resolve(
-  __dirname,
-  './stylelintConfigStyled.js'
-);
-
-// Read GraphQl schema and custom linters (ESLint, stylelint) config
-try {
-  fs.readFileSync('./schema.json', 'utf8').toString();
-  schemaJsonFilepath = path.resolve('./schema.json');
-  stylelintConfigFilePath = path.resolve('./.stylelintrc');
-  customESlintFile = require.resolve(path.resolve('./.eslintrc.prod.js'));
-} catch (e) {
-  schemaJsonFilepath = path.resolve(__dirname, '../template/schema.json');
-  stylelintConfigFilePath = path.resolve(__dirname, '../template/.stylelintrc');
-  customESlintFile = require.resolve(
-    path.resolve(__dirname, '../template/.eslintrc.prod.js')
-  );
-}
-
-// Define GraphQl files ESLint config
-const customESLintConfig =
-  isGraphqlActivated && schemaJsonFilepath
-    ? {
-        test: /\.(gql|graphql)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      }
-    : {};
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -150,7 +107,6 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      customESLintConfig,
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
@@ -159,7 +115,7 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
+              configFile: 'config/.eslintrc.prod.js',
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -224,13 +180,10 @@ module.exports = {
     // In production, it will be an empty string unless you specify "homepage"
     // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
-    // Generates an `index.html` file with the <script> injected.
     new StyleLintPlugin({
-      configFile: stylelintConfigFilePath,
-    }),
-    new StyleLintPlugin({
-      files: ['./src/**/*.js'],
-      configFile: stylelintConfigStyledFilePath,
+      emitErrors: false,
+      configFile: path.resolve(__dirname, './.stylelintrc'),
+      sytax: 'scss',
     }),
     new HtmlWebpackPlugin({
       inject: true,
