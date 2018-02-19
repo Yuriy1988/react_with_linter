@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import styles from './App.module.scss';
+import React from 'react';
+import Counter from './features/Counter/Counter';
 
-class App extends Component {
-  render() {
-    return (
-      <div className={styles.test}>Hi!</div>
-    );
-  }
-}
+const App = () => (
+  <Counter />
+);
 
 export default App;

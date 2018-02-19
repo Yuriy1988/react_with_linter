@@ -14,7 +14,7 @@ module.exports = {
     'no-duplicate-imports': 'error',
     'no-inline-comments': 'warn',
     'no-lonely-if': 'warn',
-    'no-magic-numbers': ['warn', { enforceConst: true }],
+    // 'no-magic-numbers': ['warn', { enforceConst: true }],
     'no-multi-spaces': 'warn',
     'no-param-reassign': ['error'],
     'no-plusplus': 'error',
