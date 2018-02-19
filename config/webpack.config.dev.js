@@ -12,52 +12,17 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const getCustomConfig = require('./custom-react-scripts/config');
-const fs = require('fs');
-const graphqlEnv = process.env['REACT_APP_GRAPHQL'] || '';
-const isGraphqlActivated = graphqlEnv.indexOf('true') !== -1;
 
 // Prepare custom GraphQl config
-let schemaJsonFilepath;
-let customESlintFile = {};
 let stylelintConfigFilePath;
 const stylelintConfigStyledFilePath = path.resolve(
   __dirname,
   './stylelintConfigStyled.js'
 );
 
-// Read GraphQl schema and custom linters (ESLint, stylelint) config
-try {
-  fs.readFileSync('./schema.json', 'utf8').toString();
-  // schemaJsonFilepath = path.resolve('./schema.json');
-  stylelintConfigFilePath = path.resolve('./.stylelintrc');
-  customESlintFile = require.resolve(path.resolve('./eslintrc.js'));
-} catch (e) {
-  // schemaJsonFilepath = path.resolve(__dirname, '../template/schema.json');
-  stylelintConfigFilePath = path.resolve(__dirname, './stylelintrc');
-  customESlintFile = require.resolve(
-    path.resolve('eslintrc.js')
-  );
-}
 
-// Define GraphQl files ESLint config
-const customESLintConfig =
-  isGraphqlActivated && schemaJsonFilepath
-    ? {
-        test: /\.(gql|graphql)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      }
-    : {};
+path.resolve(__dirname, './.stylelintrc');
+require.resolve(path.resolve(__dirname, './.eslintrc.js'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -160,7 +125,6 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      // customESLintConfig,
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
@@ -169,7 +133,6 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -239,15 +202,15 @@ module.exports = {
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
-    new StyleLintPlugin({
-      emitErrors: false,
-      configFile: stylelintConfigFilePath,
-    }),
-    new StyleLintPlugin({
-      emitErrors: false,
-      files: ['./src/**/*.js'],
-      configFile: stylelintConfigStyledFilePath,
-    }),
+    // new StyleLintPlugin({
+    //   emitErrors: false,
+    //   configFile: stylelintConfigFilePath,
+    // }),
+    // new StyleLintPlugin({
+    //   emitErrors: false,
+    //   files: ['./src/**/*.js'],
+    //   configFile: stylelintConfigStyledFilePath,
+    // }),
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,

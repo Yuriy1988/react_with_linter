@@ -50,6 +50,7 @@
     "jest-styled-components": "^4.9.0",
     "jest-transform-graphql": "^2.1.0",
     "moment": "^2.19.1",
+    "node-sass": "^4.7.2",
     "object-assign": "4.1.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-custom-properties": "^6.2.0",
@@ -73,6 +74,7 @@
     "react-test-renderer": "^16.0.0",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
+    "sass-loader": "^6.0.6",
     "serve": "^6.4.1",
     "style-loader": "0.18.2",
     "styled-components": "^2.2.3",
@@ -80,7 +82,6 @@
     "stylelint-config-standard": "^17.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-custom-processor-loader": "^0.4.0",
-    "stylelint-processor-styled-components": "^1.0.0",
     "stylelint-webpack-plugin": "^0.9.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
@@ -94,50 +95,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "lint-tests": "node scripts/lint.js-tests",
-    "serve": "serve ./build -p 3001",
-    "storybook": "start-storybook -s ./public -p 9001",
-    "build-storybook": "build-storybook -c .storybook -o build-storybook",
-    "fetch-schema": "node scripts/fetch.js-schema",
-    "convert-schema": "apollo-codegen introspect-schema schema.graphql --output schema.json"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js",
-      "<rootDir>/config/enzymeSetup.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^.+\\.(gql|graphql)$": "jest-transform-graphql",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
+    "serve": "serve ./build -p 3001"
   },
   "babel": {
     "presets": [
