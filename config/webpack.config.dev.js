@@ -22,7 +22,7 @@ const stylelintConfigStyledFilePath = path.resolve(
 
 
 path.resolve(__dirname, './.stylelintrc');
-require.resolve(path.resolve(__dirname, './.eslintrc.js'));
+// require.resolve(path.resolve('./.eslintrc.js'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -133,6 +133,7 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
+              configFile: 'config/.eslintrc.js',
             },
             loader: require.resolve('eslint-loader'),
           },
