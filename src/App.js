@@ -1,24 +1,37 @@
 import React, { Fragment } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './App.module.scss';
-import Counter from './features/Counter/Counter';
-
-const NoMatch = () => 'nothing to show';
+import Routes from './Routes';
 
 const App = () => (
   <Fragment>
     <div style={{ border: '2px solid' }}>
       <NavLink
         activeClassName={styles.active}
-        to='/counter'
-      >About</NavLink>
+        className={styles.link}
+        to='/page2'
+      >
+        Page 2
+      </NavLink>
+      <NavLink
+        to="/page1"
+        activeStyle={{
+          fontWeight: 'bold',
+          color: 'red'
+        }}
+        activeClassName={styles.active}
+      >Page1</NavLink>
+      <NavLink
+        to="/private"
+        activeStyle={{
+          fontWeight: 'bold',
+          color: 'red'
+        }}
+        className={styles.link}
+        activeClassName={styles.active}
+      >Private Page</NavLink>
     </div>
-    <div>
-      <Switch>
-        <Route exact path='/counter' component={Counter} />
-        <Route component={NoMatch} />
-      </Switch>
-    </div>
+    <Routes />
   </Fragment>
 );
 

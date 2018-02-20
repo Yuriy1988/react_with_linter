@@ -10,7 +10,7 @@ const store = configureStore();
 const mountApp = document.getElementById('root');
 render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/" >
       <App />
     </BrowserRouter>
   </Provider>,
