@@ -24,17 +24,16 @@ class Counter extends Component {
 
   setCounterValue = () => {
     this.props.setCounterValue(this.state.inputValue);
-  }
+  };
 
   handleInputChange = (e) => {
     this.setState({
       inputValue: e.target.value,
     });
-  }
+  };
 
   render() {
     const { inputValue } = this.state;
-    console.log(this.props)
     const { increment, decrement, counterValue } = this.props;
 
     return (

@@ -49,7 +49,7 @@ module.exports = {
     'react/no-multi-comp': 1,
     'react/no-unknown-property': 1,
     'react/no-unused-prop-types': 1,
-    'react/prop-types': 1,
+    // 'react/prop-types': 1,
     'react/self-closing-comp': 1,
     'react/sort-comp': 1,
     semi: ['warn', 'always', { omitLastInOneLineBlock: true }],

@@ -1,14 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
-
-// Redux store
-let store = null;
+import createSagaMiddleware from 'redux-saga';
 
 // Redux dev tools
 let devTools = f => f;
+// const sagaMiddleware = createSagaMiddleware()
 
-// Redux middleware
-const middleware = [];
 
 if (process.browser &&
   process.env.NODE_ENV !== 'production' &&
@@ -19,11 +16,9 @@ if (process.browser &&
 const configureStore = (initialState = {}) => (
   createStore(
     rootReducer,
+    // applyMiddleware(sagaMiddleware),
     initialState,
-    compose(
-      applyMiddleware(...middleware),
-      devTools
-    ),
+    devTools,
   )
 );
 
